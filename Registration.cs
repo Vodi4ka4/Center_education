@@ -89,7 +89,7 @@ namespace Center_education
                 return regex.IsMatch(input);
             }
         }
-        private bool Check_combobox()
+        public bool Check_combobox()
         {
             if (comboBox_post.SelectedIndex == -1)
             {
@@ -104,8 +104,8 @@ namespace Center_education
         private void button_back_Click(object sender, EventArgs e)
         {
             Authorization authorization = new Authorization();
-            authorization.FormClosed += (s, args) => Close();
-            authorization.Show();
+            authorization.ShowDialog();
+            this.Close();
         }
 
         private void comboBox_post_SelectedIndexChanged(object sender, EventArgs e)
@@ -115,7 +115,8 @@ namespace Center_education
 
         private void button_reg_Click(object sender, EventArgs e)
         {
-            if(Check_existence() == true && Check_password() == true && Check_combobox() )
+            Reg reg = new Reg();
+            if(Check_existence() == true && reg.Check_password(textBox_password.Text) == true && Check_combobox() )
             {
                 using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
                 {

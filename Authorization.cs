@@ -39,7 +39,6 @@ namespace Center_education
                         return false;
                     }
                 }
-                connection.Close();
             }
         }
         private int Check_post()
@@ -65,7 +64,7 @@ namespace Center_education
             registration.Show();
         }
         public int error = 0;
-        public string login { get; set; }
+        public static string login = "";
         private void button_enter_Click(object sender, EventArgs e)
         {
             using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
@@ -82,6 +81,7 @@ namespace Center_education
                         command.Parameters.AddWithValue("@login", login);
                         command.Parameters.AddWithValue("@password", password);
                         int count = Convert.ToInt32(command.ExecuteScalar());
+                        connection.Close();
                         if (count > 0)
                         {
                             role = Check_post();
@@ -94,7 +94,6 @@ namespace Center_education
                             else
                             {
                                 Manager manager = new Manager();
-                                manager.login = "Значение, которое нужно передать";
                                 manager.FormClosed += (s, args) => Close();
                                 manager.Show();
                             }

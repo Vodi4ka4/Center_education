@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\NUnit.4.0.1\build\NUnit.props" Condition="Exists('..\packages\NUnit.4.0.1\build\NUnit.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -12,6 +13,8 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,6 +36,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.9\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.3, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.3\lib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
@@ -45,8 +54,14 @@
     <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.8.0.0\lib\net462\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Npgsql, Version=8.0.1.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Npgsql.8.0.1\lib\netstandard2.0\Npgsql.dll</HintPath>
+    <Reference Include="Npgsql, Version=8.0.2.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Npgsql.8.0.2\lib\netstandard2.0\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=4.0.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.4.0.1\lib\net462\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework.legacy, Version=4.0.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.4.0.1\lib\net462\nunit.framework.legacy.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -107,6 +122,21 @@
     <Compile Include="Authorization.Designer.cs">
       <DependentUpon>Authorization.cs</DependentUpon>
     </Compile>
+    <Compile Include="Auto.cs" />
+    <Compile Include="Contract.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Contract.Designer.cs">
+      <DependentUpon>Contract.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Deal.cs" />
+    <Compile Include="Document.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Document.Designer.cs">
+      <DependentUpon>Document.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EducationProgram.cs" />
     <Compile Include="Manager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -121,14 +151,24 @@
     <Compile Include="Recover_password.Designer.cs">
       <DependentUpon>Recover_password.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reg.cs" />
     <Compile Include="Registration.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Registration.Designer.cs">
       <DependentUpon>Registration.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Admin.resx">
+      <DependentUpon>Admin.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Authorization.resx">
       <DependentUpon>Authorization.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Contract.resx">
+      <DependentUpon>Contract.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Document.resx">
+      <DependentUpon>Document.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Manager.resx">
       <DependentUpon>Manager.cs</DependentUpon>
@@ -163,4 +203,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Данный проект ссылается на пакеты NuGet, отсутствующие на этом компьютере. Используйте восстановление пакетов NuGet, чтобы скачать их.  Дополнительную информацию см. по адресу: http://go.microsoft.com/fwlink/?LinkID=322105. Отсутствует следующий файл: {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\NUnit.4.0.1\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.4.0.1\build\NUnit.props'))" />
+  </Target>
 </Project>
